@@ -1,19 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Post = require('./models/newsPostModel')
+const app = express()
 
-const app = express();
+app.use(express.json());
 
-
-app.get('/',(req,res) => {
-
+app.get('/test',(req,res)=> {
     res.send('test')
 })
 
-app.get('/test',(req,res) => {
 
-    res.send('testing')
+
+app.post('/newspost', async (req,res) => {
+    try {
+        const post = await Post.create(req.body)
+        res.status(200).json(post);
+        
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({message: error.message})
+    }
 })
-
 
 
 mongoose.
