@@ -32,12 +32,12 @@ router.get('/search', async (req, res) => {
     try {
         let searchQuery = {};
 
-        // Add 'question' to search query if provided
+        // by question
         if (req.query.question) {
             searchQuery.question = { $regex: req.query.question, $options: 'i' };
         }
 
-        // Add 'category' to search query if provided
+        // by category
         if (req.query.category) {
             searchQuery.category = { $regex: req.query.category, $options: 'i' };
         }
