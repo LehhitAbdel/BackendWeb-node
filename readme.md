@@ -1,10 +1,9 @@
 # Backend Web Development with Node.js
 **By Lehhit Abdel**
 
-## Overview
-Advanced backend practices using Node.js for scalable server-side applications.
+## My git
 
-[My git repo](https://github.com/LehhitAbdel/BackendWeb-node)
+[https://github.com/LehhitAbdel/BackendWeb-node](https://github.com/LehhitAbdel/BackendWeb-node)
 
 ## Resources
 - Chat GPT
