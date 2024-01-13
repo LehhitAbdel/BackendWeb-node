@@ -27,6 +27,22 @@ router.get('/', async(req,res) => {
     }
 })
 
+//search by by question
+router.get('/search', async (req, res) => {
+    try {
+        const question = req.query.question;
+
+        if (typeof question !== 'string') {
+            return res.status(400).json({ message: "Please provide a valid question for search." });
+        }
+
+        const faqs = await Faq.find({ question: { $regex: question, $options: 'i' } });
+        res.status(200).json(faqs);
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+});
+
 //fetch faq met id
 router.get('/:id', async(req,res) => {
     try {
@@ -74,6 +90,9 @@ router.delete('/:id', async(req,res) => {
         
     }
 })
+
+
+
 
 module.exports = router;
 
