@@ -61,20 +61,36 @@ app.get('/newspost/:id', async(req,res) => {
 //posts updaten
 app.put('/newspost/:id', async(req,res) => {
 
-try {
+    try {
 
     const {id} = req.params;
     const post = await Post.findByIdAndUpdate(id, req.body);
-    if(!post){
-        return res.status(404).json({message: 'cannot find post with id ${id}'})
-    }
+        if(!post){
+            return res.status(404).json({message: 'cannot find post with id ${id}'})
+        }
     const updatedPost = await Post.findById(id);
     res.status(200).json(updatedPost);
     
-} catch (error) {
-    res.status(500).json({message: error.message})
-}
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
 
+//post deleten van db 
+app.delete('/newspost/:id', async(req,res) => {
+
+    try {
+        const {id} = req.params;
+        const post = await Post.findByIdAndDelete(id);
+        if(!post){
+            return res.status(404).json({message: 'cannot find post with id ${id}'})
+        }
+        res.status(200).json({post});
+        
+    } catch (error) {
+        res.status(500).json({message: error.message})
+        
+    }
 })
 
 
