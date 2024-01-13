@@ -2,11 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Post = require('./models/newsPostModel');
 const newsPostRoutes = require('./newsPostRoutes');
-const app = express()
+const faqRoutes = require('./faqRoutes');
+const app = express();
 
 app.use(express.json());
-app.use('/newspost', newsPostRoutes);
 app.use(express.urlencoded({extended: false}));
+app.use('/newspost', newsPostRoutes);
+app.use('/faq', faqRoutes);
+
 
 mongoose.
 connect('mongodb+srv://admin:admin123@nodeapi.1dzfhcd.mongodb.net/Node-API?retryWrites=true&w=majority')
