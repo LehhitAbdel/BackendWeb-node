@@ -27,21 +27,28 @@ router.get('/', async(req,res) => {
     }
 })
 
-//search faq by question
+// search for FAQ by more then one field
 router.get('/search', async (req, res) => {
     try {
-        const question = req.query.question;
+        let searchQuery = {};
 
-        if (typeof question !== 'string') {
-            return res.status(400).json({ message: "Please provide a valid question for search." });
+        // Add 'question' to search query if provided
+        if (req.query.question) {
+            searchQuery.question = { $regex: req.query.question, $options: 'i' };
         }
 
-        const faqs = await Faq.find({ question: { $regex: question, $options: 'i' } });
+        // Add 'category' to search query if provided
+        if (req.query.category) {
+            searchQuery.category = { $regex: req.query.category, $options: 'i' };
+        }
+
+        const faqs = await Faq.find(searchQuery);
         res.status(200).json(faqs);
     } catch (error) {
         res.status(500).json({message: error.message})
     }
 });
+
 
 //fetch faq met id
 router.get('/:id', async(req,res) => {
