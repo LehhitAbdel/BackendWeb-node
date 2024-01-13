@@ -1,30 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const Post = require('./models/newsPostModel');
-const newsPostRoutes = require('./newsPostRoutes');
-const app = express()
-
-app.use(express.json());
-app.use('/newspost', newsPostRoutes);
-app.use(express.urlencoded({extended: false}));
-
-mongoose.
-connect('mongodb+srv://admin:admin123@nodeapi.1dzfhcd.mongodb.net/Node-API?retryWrites=true&w=majority')
-.then(() => {
-    const PORT = 3000;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    console.log('connected to db')
-}).catch((error) => {
-    console.log(error)
-})
+const router = express.Router();
 
 
-app.get('/test',(req,res)=> {
-    res.send('test')
-})
 
-/*
-app.post('/newspost', async (req,res) => {
+
+//posts in DB plaatsen
+router.post('/', async (req,res) => {
     try {
         const post = await Post.create(req.body)
         res.status(200).json(post);
@@ -36,7 +18,7 @@ app.post('/newspost', async (req,res) => {
 })
 
 //posts fetchen
-app.get('/newspost', async(req,res) => {
+router.get('/', async(req,res) => {
 
     try {
         const posts = await Post.find({});
@@ -48,7 +30,7 @@ app.get('/newspost', async(req,res) => {
 })
 
 //fetch post met id
-app.get('/newspost/:id', async(req,res) => {
+router.get('/:id', async(req,res) => {
     try {
         const {id} = req.params;
         const post = await Post.findById(id);
@@ -61,7 +43,7 @@ app.get('/newspost/:id', async(req,res) => {
 })
 
 //posts updaten
-app.put('/newspost/:id', async(req,res) => {
+router.put('/:id', async(req,res) => {
 
     try {
 
@@ -79,7 +61,7 @@ app.put('/newspost/:id', async(req,res) => {
 })
 
 //post deleten van db 
-app.delete('/newspost/:id', async(req,res) => {
+router.delete('/:id', async(req,res) => {
 
     try {
         const {id} = req.params;
@@ -94,8 +76,5 @@ app.delete('/newspost/:id', async(req,res) => {
         
     }
 })
-*/
 
-
-
-
+module.exports = router;
