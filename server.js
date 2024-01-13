@@ -9,8 +9,33 @@ app.get('/test',(req,res)=> {
     res.send('test')
 })
 
+//posts fetchen
+app.get('/newspost', async(req,res) => {
+
+    try {
+        const posts = await Post.find({});
+        res.status(200).json(posts);
+        
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
+//fetch post met id
+app.get('/newspost/:id', async(req,res) => {
+    try {
+        const {id} = req.params;
+        const post = await Post.findById(id);
+        res.status(200).json(post);
+        
+    } catch (error) {
+        res.status(500).json({message: error.message})
+        
+    }
+})
 
 
+//posts in DB plaatsen
 app.post('/newspost', async (req,res) => {
     try {
         const post = await Post.create(req.body)
