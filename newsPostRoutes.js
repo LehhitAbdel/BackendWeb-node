@@ -17,17 +17,19 @@ router.post('/', async (req,res) => {
     }
 })
 
-//posts fetchen
-router.get('/', async(req,res) => {
-
+//posts fetchen (limit/offset)
+router.get('/', async (req, res) => {
     try {
-        const posts = await Post.find({});
+        const limit = parseInt(req.query.limit) || 10; // default limit to 10
+        const offset = parseInt(req.query.offset) || 0; // default offset to 0
+
+        const posts = await Post.find({}).limit(limit).skip(offset);
         res.status(200).json(posts);
-        
     } catch (error) {
         res.status(500).json({message: error.message})
     }
-})
+});
+
 
 //fetch post met id
 router.get('/:id', async(req,res) => {

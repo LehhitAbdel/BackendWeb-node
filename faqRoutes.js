@@ -27,7 +27,7 @@ router.get('/', async(req,res) => {
     }
 })
 
-//search by by question
+//search faq by question
 router.get('/search', async (req, res) => {
     try {
         const question = req.query.question;
